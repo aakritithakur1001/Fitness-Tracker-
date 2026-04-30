@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRENGTH SANCTUARY | Next-Gen Fitness</title>
+    <style>
+        :root {
+            --primary: #c026d3;
+            /* Fuchsia */
+            --secondary: #ec4899;
+            /* Pink */
+            --accent: #06b6d4;
+            /* Cyan */
+            --bg-dark: #0f172a;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Light Mode Variables */
+        .light-theme {
+            --primary: #d946ef;
+            --secondary: #ec4899;
+            --accent: #0ea5e9;
+            --bg-dark: #f8fafc;
+            --text-light: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            /* Fallback */
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Dynamic Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(46, 16, 101, 0.8), rgba(8, 47, 73, 0.9));
+            z-index: -1;
+            transition: opacity 0.5s ease;
+        }
+
+        .light-theme::before {
+            background: linear-gradient(135deg, #e0f2fe, #fce7f3, #fdf4ff);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        #theme-toggle {
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            background: transparent;
+            color: var(--text-light);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle:hover {
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Hero */
+        header {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--accent), var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        section {
+            padding: 80px 10%;
+        }
+
+        h2.section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--text-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Layout Grids */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tracker-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Inputs & Buttons */
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-light);
+            transition: border 0.3s;
+            font-size: 1rem;
+        }
+
+        .light-theme input,
+        .light-theme select {
+            background: rgba(255, 255, 255, 0.5);
+            color: #0f172a;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-accent {
+            background: linear-gradient(45deg, var(--accent), #2563eb);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .btn-accent:hover {
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* BMI Calculator & Macros */
+        .bmi-inputs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .result-text {
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        /* Timer */
+        #timer-display {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 15px 0;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Videos */
+        .video-box {
+            text-align: center;
+        }
+
+        .iframe-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s;
+        }
+
+        .day-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Tracker */
+        #log-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .log-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .light-theme .log-item {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .log-item:hover {
+            transform: translateX(5px);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .light-theme .log-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        #quote-box {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hydration Style */
+        .hydration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .water-drop {
+            height: 60px;
+            background: rgba(6, 182, 212, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 10px 10px 50% 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .water-drop.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            margin: 5% auto;
+            padding: 40px;
+            border: 1px solid var(--glass-border);
+            width: 80%;
+            max-width: 800px;
+            border-radius: 30px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: modalIn 0.4s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .routine-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .routine-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(15, 23, 42, 0.9);
+            margin-top: 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        @media (max-width: 800px) {
+
+            .tool-grid,
+            .tracker-container {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <li><a href="#about">About</a></li>
+    <!-- ABOUT US SECTION -->
+<section id="about">
+    <h2 class="section-title fade-up">About Us</h2>
+
+    <div class="card fade-up" style="max-width:900px; margin:auto; text-align:center;">
+
+        <!-- IMAGES -->
+        <div style="display:flex; justify-content:center; gap:40px; margin-bottom:20px; flex-wrap:wrap;">
+            <div>
+                <img src="pictures/abhishek.png" alt="Teacher"
+                    style="width:120px; height:200px; border-radius:20%; object-fit:cover;">
+                    <br>
+                    <label style="margin-right: 10px;">Teacher</label>
+            </div>
+            <div>
+                <img src="pictures/aakriti.jpeg" alt="Student"
+                    style="width:120px; height:200px; border-radius:20%; object-fit:cover;">
+                      <br>
+                    <label style="margin-right: 10px;">Student</label>
+            
+            </div>
+        </div>
+
+        <!-- NAMES -->
+        <p style="font-size:1.2rem; margin:10px 0;">
+            Teacher Name - Dr. Abhishek Thakur
+        </p>
+
+        <p style="font-size:1.2rem; margin:10px 0;">
+            Student Name - Aakriti Thakur
+        </p>
+
+        <!-- LINKEDIN LINKS -->
+        <div style="margin-top:15px;">
+            <a href="https://www.linkedin.com/in/dr-abhishek-thakur-00123321/" target="_blank" class="btn btn-primary">Teacher LinkedIn</a>
+            <a href="https://www.linkedin.com/in/aakriti-thakur-7289ab385?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="btn btn-accent">Student LinkedIn</a>
+        </div>
+
+    </div>
+</section>
+
+    <nav>
+        <div class="logo">STRENGTH<span>SANCTUARY</span></div>
+        <div class="nav-right">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#recovery">Recovery</a></li>
+                <li><a href="#nutrition">Nutrition</a></li>
+                <li><a href="#workouts">Workouts</a></li>
+            </ul>
+            <button id="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+        </div>
+    </nav>
+
+    <header id="home">
+        <h1 class="fade-up">Elite Fitness Reimagined</h1>
+        <div id="quote-box" class="fade-up">"Loading motivation..."</div>
+    </header>
+
+    <!-- NEW SECTION 1: PROGRAM SELECTOR -->
+    <section id="programs">
+        <h2 class="section-title fade-up">Choose Your Protocol</h2>
+        <div class="tool-grid">
+            <div class="card fade-up">
+                <h3 style="color:var(--accent); margin-bottom:15px;">Hypertrophy (PPL)</h3>
+                <p style="opacity:0.8; line-height:1.6; margin-bottom:20px;">
+                    Push, Pull, Legs splits the body into muscle groups that work together. Ideal for maximizing muscle
+                    growth and recovery.
+                </p>
+                <ul style="list-style:none; line-height:2;">
+                    <li>🔥 High Volume Training</li>
+                    <li>🏗️ Muscle Density Focus</li>
+                    <li>🧬 Progressive Overload</li>
+                </ul>
+                <button class="btn btn-accent" onclick="showRoutine('ppl')" style="width:100%; margin-top:20px;">Explore
+                    Routine</button>
+            </div>
+            <div class="card fade-up">
+                <h3 style="color:var(--primary); margin-bottom:15px;">Strength (Powerlifting)</h3>
+                <p style="opacity:0.8; line-height:1.6; margin-bottom:20px;">
+                    Focused on the "Big Three": Squat, Bench, and Deadlift. Master your central nervous system to move
+                    maximum weight.
+                </p>
+                <ul style="list-style:none; line-height:2;">
+                    <li>⚡ CNS Optimization</li>
+                    <li>🏋️ Low Rep / High Load</li>
+                    <li>📈 Strength Periodization</li>
+                </ul>
+                <button class="btn btn-primary" onclick="showRoutine('power')"
+                    style="width:100%; margin-top:20px;">Explore Routine</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROUTINE MODAL -->
+    <div id="routine-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title" style="color:var(--accent); text-transform:uppercase;">Routine Highlight</h2>
+            <div id="modal-body" class="routine-list">
+                <!-- Content injected via JS -->
+            </div>
+            <button class="btn btn-accent" onclick="closeModal()" style="margin-top:30px; width:100%;">Close
+                Protocol</button>
+        </div>
+    </div>
+
+    <!-- EXISITNG TOOLS -->
+    <section id="tools">
+        <h2 class="section-title fade-up">Performance Tools</h2>
+        <div class="tool-grid">
+            <div class="card fade-up">
+                <h3><span style="font-size:1.5rem">⚖️</span> BMI Calculator</h3>
+                <div class="bmi-inputs">
+                    <input type="number" id="bmi-weight" placeholder="Weight (kg)" aria-label="Weight in kg">
+                    <input type="number" id="bmi-height" placeholder="Height (cm)" aria-label="Height in cm">
+                </div>
+                <button class="btn btn-primary" onclick="calculateBMI()" style="width:100%">Calculate BMI</button>
+                <div id="bmi-result" class="result-text"></div>
+            </div>
+
+            <div class="card fade-up" style="text-align: center;">
+                <h3><span style="font-size:1.5rem">⏱️</span> Rest Timer</h3>
+                <div id="timer-display">01:00</div>
+                <button class="btn btn-primary" onclick="startTimer()" id="t-start">Start</button>
+                <button class="btn btn-accent" onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: RECOVERY & HYDRATION -->
+    <section id="recovery">
+        <h2 class="section-title fade-up">Recovery & Hydration</h2>
+        <div class="tracker-container">
+            <div class="card fade-up">
+                <h3>Hydration Tracker</h3>
+                <p style="font-size:0.9rem; opacity:0.8; margin-bottom:15px;">Track your daily water intake. Goal: 8-10
+                    glasses.</p>
+                <div class="hydration-grid">
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                    <div class="water-drop" onclick="this.classList.toggle('active')">💧</div>
+                </div>
+                <p style="text-align:center; margin-top:20px; font-weight:bold; color:var(--accent);">Tap to log a
+                    glass!</p>
+            </div>
+            <div class="card fade-up">
+                <h3>Sleep Optimization</h3>
+                <ul style="list-style:none; line-height:2.2; margin-top:10px;">
+                    <li>🕒 <strong>Consistency:</strong> Sleep & wake at same time.</li>
+                    <li>🌡️ <strong>Temp:</strong> Keep room cool (approx 18°C).</li>
+                    <li>📵 <strong>Digital Detox:</strong> No screens 60m before bed.</li>
+                    <li>☕ <strong>Caffeine:</strong> Stop intake 8-10h before sleep.</li>
+                    <li>🧘 <strong>Routine:</strong> Warm shower & deep breathing.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUTRITION SECTION -->
+    <section id="nutrition">
+        <h2 class="section-title fade-up">Nutrition & Macros</h2>
+        <div class="tracker-container">
+            <div class="card fade-up">
+                <h3>Macro Estimator</h3>
+                <select id="macro-goal" aria-label="Goal Selection">
+                    <option value="cut">Fat Loss (Cut)</option>
+                    <option value="maintain" selected>Maintain Weight</option>
+                    <option value="bulk">Muscle Gain (Bulk)</option>
+                </select>
+                <input type="number" id="macro-weight" placeholder="Weight (kg)" aria-label="Weight in kg">
+                <button class="btn btn-accent" style="width:100%" onclick="calculateMacros()">Get Macros</button>
+                <div id="macro-result" class="result-text" style="font-size: 1.1rem; line-height:1.5;"></div>
+            </div>
+            <div class="card fade-up">
+                <h3>Daily Fundamentals</h3>
+                <ul style="list-style-type:none; line-height:2; font-size:1.1rem; margin-top:10px;">
+                    <li>💧 Minimum 3-4L of water daily</li>
+                    <li>🍗 1.8g to 2.2g Protein per kg of bodyweight</li>
+                    <li>💤 7-8 hours of quality sleep for recovery</li>
+                    <li>🥗 Vegetables and fruits in at least 2 meals</li>
+                    <li>🚶‍♂️ Aim for 8k-10k steps for active recovery</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+   <!-- ONLY WORKOUT SECTION + SCRIPT PART SHOWN (REST SAME AS YOUR CODE) -->
+
+<!-- WORKOUT SECTION -->
+<section id="workouts">
+    <h2 class="section-title fade-up">Weekly Training Protocol</h2>
+    <div class="card video-box fade-up">
+        <h3 id="day-title" style="font-size: 1.8rem; margin-bottom:15px; color:var(--primary);">
+            Monday: Chest/Triceps Power
+        </h3>
+
+        <div class="iframe-container">
+            <iframe id="main-video"
+                src="https://www.youtube.com/embed/SCVCLChPQFY"
+                frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- DAY BUTTONS -->
+        <div class="day-btns">
+            <button class="btn btn-accent" onclick="setDay('Monday')">Mon</button>
+            <button class="btn btn-accent" onclick="setDay('Tuesday')">Tue</button>
+            <button class="btn btn-accent" onclick="setDay('Wednesday')">Wed</button>
+            <button class="btn btn-accent" onclick="setDay('Thursday')">Thu</button>
+            <button class="btn btn-accent" onclick="setDay('Friday')">Fri</button>
+            <button class="btn btn-accent" onclick="setDay('Saturday')">Sat</button>
+            <button class="btn btn-accent" onclick="setDay('Sunday')">Sun</button>
+        </div>
+
+        <!-- 🔍 SEARCH BAR -->
+        <div style="margin-top:20px;">
+            <input type="text" id="searchInput"
+                placeholder="Search workout (chest, abs, deadlift...)"
+                style="padding:10px; width:60%; border-radius:10px;">
+            <button class="btn btn-primary" onclick="searchWorkout()">Search</button>
+        </div>
+    </div>
+</section>
+
+    <section id="tracker">
+        <h2 class="section-title fade-up">Live Set Tracker</h2>
+        <div class="tracker-container">
+            <div class="card fade-up">
+                <form id="log-form">
+                    <input type="text" id="ex" placeholder="Exercise Name (e.g., Bench Press)" required
+                        aria-label="Exercise Name">
+                    <input type="number" id="wt" placeholder="Weight (kg)" required aria-label="Weight in kg">
+                    <input type="number" id="rp" placeholder="Reps" required aria-label="Repetitions">
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:15px;">Log Set</button>
+                </form>
+            </div>
+            <div class="card fade-up">
+                <div id="log-list"></div>
+                <button class="btn btn-accent" onclick="clearData()"
+                    style="width:100%; margin-top:15px; background: #e11d48;">Clear History</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h3 style="color:var(--text-light);">Aakriti Thakur  [ 2511981001 ]</h3>
+    </footer>
+
+    <script>
+        // 0. SCROLL ANIMATIONS (Intersection Observer)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // ROUTINE DATA
+        const routines = {
+            'ppl': {
+                title: 'Hypertrophy PPL Protocol',
+                data: [
+                    { day: 'Push', ex: 'Bench Press, OHP, Triceps Pushdown' },
+                    { day: 'Pull', ex: 'Lat Pulldowns, Rows, Face-pulls, Curls' },
+                    { day: 'Legs', ex: 'Squats, RDLs, Leg Press, Calves' },
+                    { day: 'Focus', ex: '8-12 Rep range for maximum hypertrophy' }
+                ]
+            },
+            'power': {
+                title: 'Strength / Powerlifting Protocol',
+                data: [
+                    { day: 'Heavy Squat', ex: '5x5 Squat, Accessory Lunges' },
+                    { day: 'Heavy Bench', ex: '5x5 Bench, Close Grip Bench' },
+                    { day: 'Deadlift Day', ex: '3x3 Deadlift, Rack Pulls' },
+                    { day: 'Focus', ex: '1-5 Rep range for CNS strength' }
+                ]
+            }
+        };
+
+        function showRoutine(type) {
+            const modal = document.getElementById('routine-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            const routine = routines[type];
+            title.innerText = routine.title;
+            title.style.color = type === 'ppl' ? 'var(--accent)' : 'var(--primary)';
+
+            body.innerHTML = routine.data.map(item => `
+                <div class="routine-item" style="border-left-color: ${type === 'ppl' ? 'var(--accent)' : 'var(--primary)'}">
+                    <h4 style="margin-bottom:5px;">${item.day}</h4>
+                    <p style="font-size:0.9rem; opacity:0.8;">${item.ex}</p>
+                </div>
+            `).join('');
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('routine-modal').style.display = 'none';
+        }
+
+        // Close on outside click
+        window.onclick = function (event) {
+            const modal = document.getElementById('routine-modal');
+            if (event.target == modal) closeModal();
+        }
+
+        // UPDATED WEEKLY SCHEDULE (CHEST UPDATED)
+const schedule = {
+    'Monday': { t: 'Chest/Triceps Power', u: 'https://www.youtube.com/embed/SCVCLChPQFY' },
+    'Tuesday': { t: 'Full Body Inferno', u: 'https://www.youtube.com/embed/ml6cT4AZdqI' },
+    'Wednesday': { t: 'Leg Day Annihilation', u: 'https://www.youtube.com/embed/RjexvOAsVtI' },
+    'Thursday': { t: 'HIIT Power Grid', u: 'https://www.youtube.com/embed/UBMk30rjy0o' },
+    'Friday': { t: 'Arms & Core Sculpt', u: 'https://www.youtube.com/embed/96S0v9S6S60' },
+    'Saturday': { t: 'Cardio Max Burn', u: 'https://www.youtube.com/embed/2MoGxae-zyo' },
+    'Sunday': { t: 'Active Recovery Flow', u: 'https://www.youtube.com/embed/g_tea8ZNk5A' }
+};
+
+// EXTRA SEARCH WORKOUTS (CHEST + ABS + WEIGHT LIFTING)
+const workoutSearch = {
+    "chest": { t: "Chest Workout", u: "https://www.youtube.com/embed/SCVCLChPQFY" },
+    "abs": { t: "Abs Workout", u: "https://www.youtube.com/embed/2pLT-olgUJs" },
+    "biceps": { t: "Biceps Workout", u: "https://www.youtube.com/embed/ykJmrZ5v0Oo" },
+    "triceps": { t: "Triceps Workout", u: "https://www.youtube.com/embed/6kALZikXxLc" },
+    "shoulders": { t: "Shoulder Workout", u: "https://www.youtube.com/embed/qEwKCR5JCog" },
+    "back": { t: "Back Workout", u: "https://www.youtube.com/embed/eE7dzM0iexc" },
+
+    // weight lifting
+    "deadlift": { t: "Deadlift Training", u: "https://www.youtube.com/embed/op9kVnSso6Q" },
+    "bench press": { t: "Bench Press", u: "https://www.youtube.com/embed/gRVjAtPip0Y" },
+    "squat": { t: "Squat Workout", u: "https://www.youtube.com/embed/aclHkVaku9U" }
+};
+
+// DAY SWITCH FUNCTION (same as yours)
+function setDay(day) {
+    document.getElementById('day-title').innerText = day + ": " + schedule[day].t;
+
+    const iframe = document.getElementById('main-video');
+    iframe.style.opacity = 0;
+
+    setTimeout(() => {
+        iframe.src = schedule[day].u;
+        iframe.style.opacity = 1;
+    }, 300);
+}
+
+// 🔍 SEARCH FUNCTION (NEW DOM FEATURE)
+function searchWorkout() {
+    let input = document.getElementById("searchInput").value.toLowerCase().trim();
+
+    let found = false;
+
+    for (let key in workoutSearch) {
+        if (key.includes(input)) {
+            document.getElementById('day-title').innerText = workoutSearch[key].t;
+
+            const iframe = document.getElementById('main-video');
+            iframe.style.opacity = 0;
+
+            setTimeout(() => {
+                iframe.src = workoutSearch[key].u;
+                iframe.style.opacity = 1;
+            }, 300);
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        alert("Workout not found! Try: chest, abs, squat, deadlift...");
+    }
+}
+
+        // 2. THEME TOGGLE
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+
+        // 3. BMI CALCULATOR
+        function calculateBMI() {
+            const w = document.getElementById('bmi-weight').value;
+            const h = document.getElementById('bmi-height').value / 100;
+            if (w > 0 && h > 0) {
+                const bmi = (w / (h * h)).toFixed(1);
+                let cat = bmi < 18.5 ? "Underweight" : bmi < 25 ? "Optimal Range" : "Overweight";
+                document.getElementById('bmi-result').innerText = `Your Index: ${bmi} (${cat})`;
+            }
+        }
+
+        // 3.5 MACROS CALCULATOR
+        function calculateMacros() {
+            const w = document.getElementById('macro-weight').value;
+            const goal = document.getElementById('macro-goal').value;
+            if (w > 0) {
+                // Simplified Rule-of-thumb TDEE & Macros based on weight
+                let cals = w * 24 * 1.5; // very rough BMR * activity multiplier
+                if (goal === 'cut') cals -= 500;
+                if (goal === 'bulk') cals += 300;
+
+                let p = Math.round(w * 2.2);
+                let f = Math.round((cals * 0.25) / 9);
+                let c = Math.round((cals - (p * 4) - (f * 9)) / 4);
+
+                document.getElementById('macro-result').innerHTML =
+                    `Daily Target: ~${Math.round(cals)} kcal <br> 
+                     Protein: ${p}g | Carbs: ${c}g | Fats: ${f}g`;
+            }
+        }
+
+        // 4. TIMER
+        let time = 60, interval = null;
+        function startTimer() {
+            if (interval) { clearInterval(interval); interval = null; document.getElementById('t-start').innerText = "Start"; return; }
+            document.getElementById('t-start').innerText = "Pause";
+            interval = setInterval(() => {
+                time--;
+                let m = Math.floor(time / 60), s = time % 60;
+                document.getElementById('timer-display').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+                if (time <= 0) { clearInterval(interval); alert("Time's up! Back to work!"); resetTimer(); }
+            }, 1000);
+        }
+        function resetTimer() { clearInterval(interval); interval = null; time = 60; document.getElementById('timer-display').innerText = "01:00"; document.getElementById('t-start').innerText = "Start"; }
+
+        // 5. MOTIVATIONAL QUOTES
+        const quotes = [
+            "Your body can stand almost anything. It's your mind that you have to convince.",
+            "Success starts with self-discipline.",
+            "The hard days are what make you stronger.",
+            "Don't wait for tomorrow. Do it today."
+        ];
+        document.getElementById('quote-box').innerText = quotes[Math.floor(Math.random() * quotes.length)];
+
+        // 6. TRACKER
+        const form = document.getElementById('log-form');
+        let logs = JSON.parse(localStorage.getItem('fLogs')) || [];
+        function showLogs() {
+            document.getElementById('log-list').innerHTML = logs.map(l => `<div class="log-item"><span><strong>${l.n}</strong></span><span>${l.w}kg x ${l.r}</span></div>`).reverse().join('');
+        }
+        if (form) {
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                logs.push({ n: document.getElementById('ex').value, w: document.getElementById('wt').value, r: document.getElementById('rp').value });
+                localStorage.setItem('fLogs', JSON.stringify(logs));
+                form.reset(); showLogs();
+            };
+        }
+        function clearData() { logs = []; localStorage.clear(); showLogs(); }
+        showLogs();
+    </script>
+</body>
+
+</html>
